@@ -1,0 +1,61 @@
+0.5:
+  - Separate files in folders according to their purpose
+  - Shorten the name of objects to 5 characters.
+  - Shorten name of private data to 4 characters for single variables, 5 characters for array and 8 characters for controls.
+  - Reduce the number of gsl_vector per partk to 3.
+  - Add a bunch of controls for world object (see world.h)
+  - Add support for rectangular PBC.
+  - Add support for cutoff distance.
+  - Add truncated form for LJ force.
+  - Remove incorrect Coulomb force calculation.
+  - Add a lattice generator for initial conditions.
+
+0.5.1
+  - Add support for changing dimension size
+  - Shorten the name of constants
+  - Make output format modifiable.
+
+0.5.2
+  - Add support for neighbor list, with fixed or automatic update rate.
+  - Add energy and momentum calculation 
+
+0.6.0
+  - Fix incorrect initialization for neighbor list
+  - Add support for changing precision (GSL functions require manual modification though)
+  - Add support for simple velocity Verlet in DPD.
+  - Add support for uncorrelated and parallel DPD.
+  - Separate force calculation into conservative, frictional and random components.
+
+0.6.3
+  - Add support for impulse leapfrog (correlated mode is bugged though).
+  - Add support for changing precision for GSL functions.
+
+0.6.4
+  - Fix incorrect initialization of dummy vectors.
+  - Add support for Lowe-Andersen integrator.
+
+0.7.0
+  - Add support for MZ formalism (still incorrect though).
+  - Remove const_cast due to incorrect const assignment.
+  - Fix half-temperature bug in DPD velocity Verlet.
+
+0.7.1
+  - Fix MZ formalism (almost correct now).
+
+0.7.2
+  - Add memor and dmemo objects (memory containers).
+  - Add support for memory containers in world object (each container type is supported by their respective world source file) (may remove in the future if one method proves to be superior).
+
+0.7.3
+  - Add support for self-consistent DPD-VV
+  - Fix incorrect memory for mid-step velocity in DPD-VV.
+  - Remove assert lines that check for non-physical conditions (assert should only check for logical conflict).
+  - Templarize dmemo object.
+
+0.8.0
+  - Add support for full MZ and full auxiliary MZ (still bugged though)
+  - Add support for gsl_matrix
+
+0.8.1
+  - Fix auxiliary MZ integrator (the orthogonal component is still bugged)
+  - Add support for full DPD (for non-impulse integrator)

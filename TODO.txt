@@ -1,0 +1,112 @@
+Necessary:
+X add PBC and cutoff distance
+- add truncated LJ force
+  X shifted potential
+  - smooth potential
+  X truncated force
+  X shifted force
+  - smooth force
+X add velocity Verlet method
+- add Ewald sum for electric force
+- add thermostats
+  - Andersen thermostat
+  - Nose-Hoover thermostat
+X add Verlet neighbour list
+  X add automatic update
+- add cell list
+- add DPD methods
+  - add DPD-LF method
+  X add impulse DPD-LF method
+  X add DPD-VV method
+    - add support for DPD
+  - add consistent DPD-VV method
+  X add Lowe method
+  - add impulse DPD-VV method
+X allow the use of single precision
+- allow the allocation of partk to be modifiable
+  - asserting condition is done at initilization, not at each function call
+- add LZ formalism
+  ~ add memory kernel
+    ~ add template and inheritance for memory class
+    - add support for Verlet list (may need to revamp Verlet list too)
+  - add support for different types of pair
+  - add orthogonal force
+
+Possible:
+- add barostats
+X add angle class
+  - add angle force
+X add dihedral angle class
+  X add quadr class
+- add other boundary conditions
+X add other integration method
+~ add other DPD method
+- add class(es) for hard sphere
+- add randomization for initial coordinate and velocity
+- standardize the output format
+- revamp memory class
+  - add support for single number
+  - replace std::vector<*gsl::gsl_vector> with gsl::gsl_matrix
+  - remove dmemo
+
+Optimizing:
+- reduce number of logic controls
+~ add assert in a lot of places
+  ~ assert will not check for unrealistic condition, but only illogical one
+- add linked list
+- add reaction field
+- remove properties in object-classes and link them to type-classes
+- add const declaration if required
+X reduce number of gsl_vector used in partk
+- reconsider the memory allocation (see memor.h for a detailed discussion)
+- reconsider the calculation for bonded interactions
+- convert use of const char* to string
+
+Testing:
+- check bonded particles are found by minimum image calculation
+~ check minimum image calculation is correct
+- check force calculation is correct
+  - hbond force
+  ~ LJ force
+  - Coulomb force
+  - angle force
+  ~ modified LJ force
+  - thermostats
+~ check integrator method is correct
+  ~ Verlet
+  ~ Leapfrog
+  ~ Velocity Verlet
+~ test Verlet neighbour list
+  ~ test automatic update
+  - test cell list
+- test if the geometric mean of sigma gives the correct properties in impulse methods
+- test the performance of 2 memory methods
+
+Debugging:
+- check if removal of const qualifier break the program's consistency
+X check what's wrong with rflect in resid
+~ check why, if rflect is declared in partk.h but not defined in partk.cpp, g++ complains about resid.cpp WHEN making simula.exe (NOT when making resid.o) (EXPLANATION: because it is called?)
+- check what's wrong with obPart and obHbnd in resid
+- check if obSize in angle and hbond (de)allocate gsl_vector properly
+- check if automatic update for Verlet list is incorrect
+X check what's wrong with impulse leapfrog in parallel mode with Verlet list
+  X retest Verlet list
+X check why velocity Verlet in DPD mode only gives half of the others results (EXPLANATION: the random force is calculated twice)
+X check why the program fails there are less than 4 partks (NOTE: segmentation fault) (EXPLANATION: bad indexing)
+- check for consistency in use of indx (indexing from 0, not 1)
+- check why naive integrator for auxiliary memory fails
+  X check why the non-interacting auxiliary variables (A_sp = 0) still blow up for timestep larger than 0.005 (EXPLANATION: the naive integrator is not exact)
+  - check why the system still randomly blows up, even for small timestep
+- implement  new integrator for auxiliary memory
+  X check if the trajectory is stable even for large timestep
+  ~ produce the symbolic exponential matrix, since A_sp is not constant (EXPLANATION: matlab fails)
+  - check why sqrtm gives correct temperature, but not chol
+  - check why orthogonal form is wrong
+- fix the numerical instability in force calculation  
+- change the order of force computation so that the DPD integrators compute the force in the correct order
+
+Extreme
+~ add angle and dihedral angle
+  ~ add support functions
+- add recursion to support variable dimension
+- add interaction between non-minimum-images

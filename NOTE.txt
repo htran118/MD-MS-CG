@@ -1,0 +1,9 @@
+--- Standard DPD ---
+
+--- Standard MZ  ---
+
+--- Auxiliary MZ ---
+
+--- Bonded force ---
+- When calculating vector between bonded partk, do we apply the boundary conditions? Maybe not...
+- The angle force seems to not preserve the bond distance. Maybe this is actually correct behavior...
